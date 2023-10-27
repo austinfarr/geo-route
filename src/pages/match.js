@@ -5,7 +5,7 @@ import { geocodeAddress } from "../../lib/geocode";
 import { matchDriversWithKids } from "../../lib/matchingAlgorithm"; // Import your matching algorithm
 import Header from "@/components/Header";
 
-export default function Matching() {
+export default function Match() {
   const [drivers, setDrivers] = useState([]);
   const [kids, setKids] = useState([]);
   const [matches, setMatches] = useState([]);
