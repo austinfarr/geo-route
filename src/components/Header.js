@@ -34,7 +34,7 @@ function Header() {
               <Link href="/kids">
                 <Button sx={{ color: "#fff" }}>Kids</Button>
               </Link>
-              <Link href="/matching">
+              <Link href="/match">
                 <Button sx={{ color: "#fff" }}>Matching</Button>
               </Link>
             </Box>

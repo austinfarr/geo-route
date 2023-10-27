@@ -44,7 +44,7 @@ export default function Home() {
           </Link>
         </Stack>
         <Box textAlign="center" sx={{ p: 2 }}>
-          <Link href="/matching" passHref>
+          <Link href="/match" passHref>
             <Button variant="contained" color="secondary">
               MATCH!!!!
             </Button>
