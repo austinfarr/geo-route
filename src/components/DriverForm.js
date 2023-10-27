@@ -1,5 +1,4 @@
-// components/DriverForm.js
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Button,
   Dialog,
@@ -9,12 +8,24 @@ import {
   TextField,
 } from "@mui/material";
 
-function DriverForm({ open, handleClose, handleAddDriver }) {
+function DriverForm({
+  open,
+  handleClose,
+  handleAddDriver,
+  handleUpdateDriver,
+  editingDriver,
+}) {
   const [formData, setFormData] = useState({
     name: "",
     location: "",
     capacity: "",
   });
+
+  useEffect(() => {
+    if (editingDriver) {
+      setFormData(editingDriver);
+    }
+  }, [editingDriver]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -25,13 +36,19 @@ function DriverForm({ open, handleClose, handleAddDriver }) {
   };
 
   const handleSubmit = () => {
-    handleAddDriver(formData);
+    if (editingDriver) {
+      handleUpdateDriver(formData);
+    } else {
+      handleAddDriver(formData);
+    }
     handleClose();
   };
 
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Add New Driver</DialogTitle>
+      <DialogTitle>
+        {editingDriver ? "Edit Driver" : "Add New Driver"}
+      </DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -67,7 +84,9 @@ function DriverForm({ open, handleClose, handleAddDriver }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add</Button>
+        <Button onClick={handleSubmit}>
+          {editingDriver ? "Update" : "Add"}
+        </Button>
       </DialogActions>
     </Dialog>
   );

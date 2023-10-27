@@ -1,5 +1,5 @@
 // components/KidForm.js
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Dialog,
@@ -9,7 +9,13 @@ import {
   TextField,
 } from "@mui/material";
 
-function KidForm({ open, handleClose, handleAddKid }) {
+function KidForm({
+  open,
+  handleClose,
+  handleAddKid,
+  handleUpdateKid,
+  editingKid,
+}) {
   const [formData, setFormData] = useState({
     name: "",
     location: "",
@@ -24,13 +30,31 @@ function KidForm({ open, handleClose, handleAddKid }) {
   };
 
   const handleSubmit = () => {
-    handleAddKid(formData);
+    if (editingKid) {
+      handleUpdateKid({ ...editingKid, ...formData });
+    } else {
+      handleAddKid(formData);
+    }
     handleClose();
   };
 
+  useEffect(() => {
+    if (editingKid) {
+      setFormData({
+        name: editingKid.name,
+        location: editingKid.location,
+      });
+    } else {
+      setFormData({
+        name: "",
+        location: "",
+      });
+    }
+  }, [editingKid]);
+
   return (
     <Dialog open={open} onClose={handleClose}>
-      <DialogTitle>Add New Kid</DialogTitle>
+      <DialogTitle>{editingKid ? "Edit Kid" : "Add New Kid"}</DialogTitle>
       <DialogContent>
         <TextField
           autoFocus
@@ -56,7 +80,7 @@ function KidForm({ open, handleClose, handleAddKid }) {
       </DialogContent>
       <DialogActions>
         <Button onClick={handleClose}>Cancel</Button>
-        <Button onClick={handleSubmit}>Add</Button>
+        <Button onClick={handleSubmit}>{editingKid ? "Update" : "Add"}</Button>
       </DialogActions>
     </Dialog>
   );
